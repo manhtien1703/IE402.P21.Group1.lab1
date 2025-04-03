@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Nhóm 1 - lab1</title>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script type="module">
+        import districts from "./districts/index.js";
+        import places from "./places/index.js";
+        import streets from "./streets/index.js";
+
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/Graphic",
+            "esri/layers/GraphicsLayer",
+        ], (Map, MapView, Graphic, GraphicsLayer) => {
+            var map = new Map({
+                basemap: "topo-vector"
+            });
+
+            map.on("load", () => {
+                map.graphics.enableMouseEvents();
+            });
+
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                center: [105.983461, 22.142382],
+                zoom: 10,
+                highlightOptions: {
+                    color: "blue"
+                }
+            });
+
+            const copyTextToClipboard = (text) => {
+                if (!navigator.clipboard) {
+                    fallbackCopyTextToClipboard(text);
+                    return;
+                }
+                navigator.clipboard.writeText(text).then(function () {
+                    console.log('Async: Copying to clipboard was successful!');
+                }, function (err) {
+                    console.error('Async: Could not copy text: ', err);
+                });
+            }
+
+            view.on("click", function (event) {
+                view.hitTest(event).then(function (hitTestResults) {
+                    if (hitTestResults.results) {
+                        let string_points = "[" + event.mapPoint.longitude + ", " + event.mapPoint.latitude + "],"
+                        copyTextToClipboard(string_points);
+                    }
+                })
+            });
+
+            var createGraphic = (data) => {
+                return new Graphic({
+                    geometry: data,
+                    symbol: data.symbol,
+                    attributes: data,
+                    popupTemplate: data.popupTemplate
+                });
+            };
+            var graphicsLayer = new GraphicsLayer();
+            districts.forEach((data) => {
+                graphicsLayer.add(createGraphic(data));
+            });
+            places.forEach((data) => {
+                graphicsLayer.add(createGraphic(data));
+            });
+            streets.forEach((data) => {
+                graphicsLayer.add(createGraphic(data));
+            });
+            map.add(graphicsLayer);
+        });
+
+
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
+</html>
