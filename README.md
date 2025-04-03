@@ -1,9 +1,9 @@
-# Lab 1: Map for Vinh Long Province using Esri of group 1
+# Lab 1: Map for Bac Kan Province using Esri of group 1
 
-## Course: IE402.P11
+## Course: IE402.P21
 
 ### Introduction
-This lab focuses on creating a map for Vinh Long province using the Esri library. The map will include various geographical elements such as points, polylines, polygons, and picture markers.
+This lab focuses on creating a map for Bac Kan province using the Esri library. The map will include various geographical elements such as points, polylines, polygons, and picture markers.
 
 ### Technologies Used
 - Esri ArcGIS API for JavaScript
