@@ -19,7 +19,7 @@
     <script type="module">
         import districts from "./districts/index.js";
         import places from "./places/index.js";
-        import streets from "./streets/index.js";
+        import lines from "./lines/index.js";
 
         require([
             "esri/Map",
@@ -81,7 +81,7 @@
             places.forEach((data) => {
                 graphicsLayer.add(createGraphic(data));
             });
-            streets.forEach((data) => {
+            lines.forEach((data) => {
                 graphicsLayer.add(createGraphic(data));
             });
             map.add(graphicsLayer);

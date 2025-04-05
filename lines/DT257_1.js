@@ -1,9 +1,9 @@
-const DT257 =
+const DT257_1 =
 {
   Name: "Đường tỉnh 257",
   Location: "Bắc Kạn",
   symbol: {
-    color: [0, 0, 255]
+    color: [128, 0, 128]
   },
   paths: [
 
